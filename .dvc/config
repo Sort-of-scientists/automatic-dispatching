@@ -1,0 +1,5 @@
+[core]
+    remote = storage
+['remote "storage"']
+    url = s3://hacks/automatic-dispatching
+    endpointurl = https://storage.yandexcloud.net
