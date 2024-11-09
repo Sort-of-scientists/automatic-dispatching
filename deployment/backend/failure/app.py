@@ -20,7 +20,7 @@ class TextClassifier:
 
 
 app = FastAPI()
-text_classifier = TextClassifier(model_path="./text_classifier_failure", tokenizer_path="./text_classifier_failure")
+text_classifier = TextClassifier(model_path="failure-model", tokenizer_path="failure-model")
 
 
 @app.get("/")
