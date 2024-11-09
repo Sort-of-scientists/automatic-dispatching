@@ -10,3 +10,12 @@ services:
     environment:
       - ACCESS_KEY_ID=${ACCESS_KEY_ID}
       - SECRET_ACCESS_KEY=${SECRET_ACCESS_KEY}
+    ports:
+      - "0.0.0.0:8000:8000"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "0.0.0.0:8001:8000"

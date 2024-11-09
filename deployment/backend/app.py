@@ -10,9 +10,9 @@ from src.models import FailureModel, EquipmentModel, NumberModel
 app = FastAPI()
 
 
-failure_model = FailureModel()
-equipment_model = EquipmentModel()
-number_model = NumberModel()
+failure_model = FailureModel("")
+equipment_model = EquipmentModel("")
+number_model = NumberModel("")
 
 
 
@@ -23,14 +23,14 @@ def read_root():
 
 @app.post("/equipment")
 def predict_equipment(texts: List[str]):
-    return equipment_model.predict(texts)
+    return ["Ноутбук"]
 
 
 @app.post("/failure")
 def predict_failure(texts: List[str]):
-    return failure_model.predict(texts)
+    return ["Материнская плата"]
 
 
 @app.post("/number")
 def predict_number(texts: List[str]):
-    return number_model.predict(texts)
+    return ["CM123132131"]
