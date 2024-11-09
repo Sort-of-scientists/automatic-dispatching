@@ -1,2 +1,5 @@
 uvicorn
 fastapi
+spacy
+yaml
+flashtext
