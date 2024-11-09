@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  equipment:
+    build:
+      context: ./backend/equipment
+      dockerfile: Dockerfile
+    ports:
+      - "0.0.0.0:8000:8000"
+
+  failure:
+    build:
+      context: ./backend/failure
+      dockerfile: Dockerfile
+    ports:
+      - "0.0.0.0:8001:8000"
+
+  numbers:
+    build:
+      context: ./backend/numbers
+      dockerfile: Dockerfile
+    ports:
+      - "0.0.0.0:8002:8000"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "0.0.0.0:8003:8000"
