@@ -13,6 +13,6 @@ def send_request_to_backend(text: str) -> Dict[str, Dict]:
             url=ENDPOINTS[model], json=[text]
         )
 
-        response[model] = json.loads(response[model])[0]
+        response[model] = json.loads(response[model].text)[0]
 
     return response

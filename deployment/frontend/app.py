@@ -17,11 +17,6 @@ st.markdown(
 
 st.header("Поддержка")
 
-#equipment_warning = st.warning("Недостаточно информации о типе устройства. Пожалуйста, уточните свое сообщение!")
-#failure_warning = st.warning("Недостаточно информации о точке отказа. Пожалуйста, уточните свое сообщение!")
-
-#error = st.error("Введите серийный номер устройства!")
-
 theme = st.text_input(label="Тема")
 
 description = st.text_area(
@@ -45,10 +40,10 @@ if st.button("Отправить обращение", use_container_width=True):
         if response["equipment"]["score"] < THRESHOLDS["equipment"] and response["failure"]["score"] < THRESHOLDS["failure"]:
             alert = st.warning("Недостаточно информации о точке отказа и типе устройства. Пожалуйста, уточните свое сообщение!")
     
-        else:
+        if response["equipment"]["score"] >= THRESHOLDS["equipment"] and response["failure"]["score"] >= THRESHOLDS["failure"]:
             alert = st.success("Обращение отправлено!")
     
-    time.sleep(3)
+    time.sleep(ALERT_DELAY)
 
     alert.empty()
 

@@ -1,7 +1,7 @@
 ENDPOINTS = {
-    "equipment": "http://failure:8000/predict",
-    "failure": "http://failure:8001/predict",
-    "numbers": "http://failure:8002/predict",
+    "equipment": "http://equipment:8000/predict",
+    "failure": "http://failure:8000/predict",
+    "numbers": "http://numbers:8000/predict",
 }
 
 THRESHOLDS = {
@@ -9,3 +9,5 @@ THRESHOLDS = {
     "failure": 0.8,
     "numbers": 1.0,
 }
+
+ALERT_DELAY = 1.2
