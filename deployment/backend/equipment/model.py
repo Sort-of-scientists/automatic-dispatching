@@ -4,7 +4,7 @@ from flair.data import Sentence
 from flair.models import TextClassifier
 
 
-model = TextClassifier.load('model/final-model.pt')
+model = TextClassifier.load('equipment-model.pt')
 
 
 class PredictionInfo:
