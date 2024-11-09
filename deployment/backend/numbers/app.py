@@ -1,13 +1,28 @@
+import re
 import random
 
 from fastapi import FastAPI
 from typing import List
 
 from pydantic import BaseModel
+from unidecode import unidecode
+
 
 class Prediction(BaseModel):
     label: str
     score: float
+
+
+class RegexNumberModel:
+
+    def __init__(self) -> None:
+        self.serial_number_regex = re.compile(r'([A-ZА-Я]{1,3}\d{7,15})')
+
+    def predict(self, texts: List[str]) -> List[str]:
+        predicts = [re.findall(self.serial_number_regex, text.upper()) for text in texts]
+        predicts = [unidecode(p[0]) if len(p) > 0 else 'Уточнить' for p in predicts]
+        return predicts
+
 
 app = FastAPI()
 
@@ -19,5 +34,7 @@ def read_root():
 
 @app.post("/predict")
 def predict(texts: List[str]) -> List[Prediction]:
-    return [Prediction(label="Мать", score=float(random.randint(0, 1))) for _ in range(len(texts))]
+    model = RegexNumberModel()
+    predicts = model.predict(texts)
+    return [Prediction(label=number, score=1) for number in predicts]
 
