@@ -24,7 +24,7 @@ def filter_results(results):
 
 
 app = FastAPI()
-text_classifier = TextMultiLabelClassifier(model_path="./model/text_multilabel_classifier_failure", tokenizer_path="./model/text_multilabel_classifier_failure", k=20)
+text_classifier = TextMultiLabelClassifier(model_path="./model/multilabel_classifier_failure", tokenizer_path="./model/multilabel_classifier_failure", k=20)
 
 
 @app.get("/")
@@ -36,4 +36,4 @@ def read_root():
 def predict(texts: List[str]) -> List[Prediction]:
     predictions = text_classifier.predict(texts)   
     filtered_predictions = [filter_results(pred) for pred in predictions] 
-    return [Prediction(label=pred["label"], score=pred["score"]) for pred in filtered_predictions]
+    return [[Prediction(label=pred["label"], score=pred["score"]) for pred in multilabel_list] for multilabel_list in filtered_predictions]
