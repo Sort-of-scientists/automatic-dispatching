@@ -9,6 +9,8 @@ RUN pip install dvc-s3
 
 RUN pip install -r requirements.txt
 
+RUN python -m spacy download ru_core_news_sm
+
 EXPOSE 8000
 
 CMD ["bash", "run.sh"]
