@@ -34,7 +34,8 @@ def read_root():
 
 
 @app.post("/predict")
-def predict(texts: List[str]) -> List[Prediction]:
+def predict(texts: List[str]) -> List[List[Prediction]]:
     predictions = text_classifier.predict(texts)   
     filtered_predictions = [filter_results(pred) for pred in predictions] 
-    return [[Prediction(label=pred["label"], score=pred["score"]) for pred in multilabel_list] for multilabel_list in filtered_predictions]
+    return [[Prediction(label=pred["label"], score=pred["score"]) for pred in multilabel_list]
+            for multilabel_list in filtered_predictions]
