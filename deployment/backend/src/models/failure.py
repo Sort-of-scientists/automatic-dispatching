@@ -55,7 +55,7 @@ class TrieFailureModel(FailureModel):
         lemmas = self._prepare_data(texts)
 
         keywords = [self.keyword_processor.extract_keywords(text) for text in lemmas]
-        predicts = [kw if kw else 'Материнская плата' for kw in keywords]
+        predicts = [kw[0] if len(kw) > 0 else 'Материнская плата' for kw in keywords]
 
         return predicts
 

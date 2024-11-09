@@ -1,3 +1,3 @@
-from .failure import FailureModel
-from .number import NumberModel
-from .equipment import EquipmentModel
+from .failure import FailureModel, TrieFailureModel
+from .number import NumberModel, RegexNumberModel
+from .equipment import EquipmentModel, TrieEquipmentModel

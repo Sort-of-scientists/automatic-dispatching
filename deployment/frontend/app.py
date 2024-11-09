@@ -33,7 +33,7 @@ if prompt := st.chat_input("What is up?"):
 
     response = make_request(prompt)
     
-    if len(response["number"]) == 0:
+    if response["number"] is None:
         response = \
             """
             К сожалению, я ничем не могу помочь! Пожалуйста, введите серийный номер устройства!
