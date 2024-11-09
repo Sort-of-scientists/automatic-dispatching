@@ -35,4 +35,4 @@ def read_root():
 def predict(texts: List[str]) -> List[Prediction]:
     model = RegexNumberModel()
     predicts = model.predict(texts)
-    return [Prediction(label=number, score=1.) for number in predicts]
+    return [Prediction(label=number, score=1. if number != 'Уточнить' else 0.) for number in predicts]
