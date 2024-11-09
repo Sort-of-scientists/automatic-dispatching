@@ -1,5 +1,4 @@
 import re
-import random
 
 from fastapi import FastAPI
 from typing import List
@@ -36,5 +35,4 @@ def read_root():
 def predict(texts: List[str]) -> List[Prediction]:
     model = RegexNumberModel()
     predicts = model.predict(texts)
-    return [Prediction(label=number, score=1) for number in predicts]
-
+    return [Prediction(label=number, score=1.) for number in predicts]
