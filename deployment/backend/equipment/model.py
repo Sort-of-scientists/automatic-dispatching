@@ -4,7 +4,7 @@ from flair.data import Sentence
 from flair.models import TextClassifier
 
 
-model = TextClassifier.load('model.pt')
+model = TextClassifier.load('final-model.pt')
 
 
 class PredictionInfo:
@@ -21,7 +21,13 @@ class PredictionInfo:
 
 
 def predict_labels(texts: List[str]) -> List[PredictionInfo]:
+    """
+    Predicting labels for user message and getting scores for each label
+
+    :param texts: user's messages to classify
+    :return List[PredictionInfo]: predicted label and score for each message
+    """
     sentences = [Sentence(text) for text in texts]
-    model.predict(sentences)
+    model.predict(sentences, mini_batch_size=8)
     return [PredictionInfo(sentence) for sentence in sentences]
 
