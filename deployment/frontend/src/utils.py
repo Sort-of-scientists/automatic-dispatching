@@ -1,7 +1,7 @@
 import json
 import requests
 
-from typing import Dict
+from typing import Dict, List
 
 from .constants import *
 
@@ -9,7 +9,7 @@ def send_request_to_models_backend(text: str) -> Dict[str, Dict]:
     response = {}
 
     for model in ENDPOINTS.keys():
-        if model != "database":
+        if model != "database" and model != "multilabel":
             response[model] = requests.post(
                 url=ENDPOINTS[model], json=[text]
             )
@@ -52,3 +52,11 @@ def get_messages(equipment: str, failure: str):
     })
 
     return json.loads(response.text)
+
+
+def send_request_to_multilabel_model(text: str) -> List[Dict[str, float]]:
+    response = requests.post(
+        url=ENDPOINTS["multilabel"], json=[text]
+    )
+
+    return json.loads(response.text)[0]
