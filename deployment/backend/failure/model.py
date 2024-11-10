@@ -1,7 +1,7 @@
 from typing import List
 from flair.data import Sentence
 
-from deployment.backend.failure.nn import FailureModel
+from nn import FailureModel
 
 
 class PredictionInfo:

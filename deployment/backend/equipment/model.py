@@ -1,7 +1,7 @@
 from typing import List
 from flair.data import Sentence
 
-from deployment.backend.equipment.nn import EquipmentModel
+from nn import EquipmentModel
 
 
 class PredictionInfo:
