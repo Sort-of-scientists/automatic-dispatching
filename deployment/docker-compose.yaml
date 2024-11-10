@@ -1,0 +1,48 @@
+version: '3.8'
+services:
+  database:
+    build: ./backend/database
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/mydatabase
+    depends_on:
+      - mongodb
+  
+  equipment:
+    build:
+      context: ./backend/equipment
+      dockerfile: Dockerfile
+    ports:
+      - "0.0.0.0:8001:8000"
+
+  failure:
+    build:
+      context: ./backend/failure
+      dockerfile: Dockerfile
+    ports:
+      - "0.0.0.0:8002:8000"
+
+  numbers:
+    build:
+      context: ./backend/numbers
+      dockerfile: Dockerfile
+    ports:
+      - "0.0.0.0:8003:8000"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "0.0.0.0:8004:8000"
+
+  mongodb:
+    image: mongo
+    ports:
+      - "8005:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
