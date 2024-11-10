@@ -123,3 +123,22 @@ OK!
   ]
 ]
 ```
+## Выгрузка артефактов
+В нашем проекте мы использовали DVC для контроля версий данных и моделей. По этой причине в репозитории не лежат ни сами модели, ни сами данные. Если вам потребуется выгрузить модели, то воспользуйтесь этой инструкцией:
+
+1. Установить DVC:
+```
+pip install dvc
+pip install dvc-s3
+```
+3. Склонировать репозиторий:
+```git clone https://github.com/vkimbris/automatic-dispatching.git```
+4. Внутри репозитория настроить подключение к S3:
+```
+dvc remote modify --local storage access_key_id <access_key_id>
+dvc remote modify --local storage secret_access_key <secret_access_key>
+```
+4. Выгрузить данные и модели
+dvc pull
+
+P.S для получения ```<access_key_id>``` и ```<secret_access_key>``` обратитесь к: tg - @kimbrisvv, @kkk145, @ospvval, @smaslennikova
