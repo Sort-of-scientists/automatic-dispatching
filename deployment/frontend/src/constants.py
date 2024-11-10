@@ -8,16 +8,18 @@ ENDPOINTS = {
         "numbers": "http://database:8000/numbers",
         "message": "http://database:8000/message",
         "filter": "http://database:8000/filter"
-    }
+    },
+
+    "multilabel": "http://multilabel:8000/predict"
 }
 
 THRESHOLDS = {
-    "equipment": 0.8,
-    "failure": 0.8,
+    "equipment": 0.5,
+    "failure": 0.5,
     "numbers": 1.0,
 }
 
-ALERT_DELAY = 0.3
+ALERT_DELAY = 2
 
 LABELS = {
     "equipment": ["Ноутбук", "СХД", "Сервер"],

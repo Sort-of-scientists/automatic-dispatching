@@ -24,8 +24,8 @@ def filter_results(results):
 
 
 app = FastAPI()
-text_classifier = TextMultiLabelClassifier(model_path="./model/multilabel_classifier_failure",
-                                           tokenizer_path="./model/multilabel_classifier_failure", k=20)
+text_classifier = TextMultiLabelClassifier(model_path="multilabel-model",
+                                           tokenizer_path="multilabel-model", k=20)
 
 
 @app.get("/")
