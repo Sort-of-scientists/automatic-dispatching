@@ -1,9 +1,10 @@
 from fastapi import FastAPI, Query
 from typing import List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from pymongo import MongoClient
+from datetime import datetime
 
 
 client = MongoClient("mongodb://mongodb:27017/")
@@ -15,8 +16,11 @@ collection = database["messages"]
 class Message(BaseModel):
     text: str
     failure: str
+    failure_score: float
     equipment: str
+    equipment_score: float
     number: str
+    timestamp: datetime = Field(default_factory=datetime.now)
 
 
 app = FastAPI()
@@ -29,7 +33,7 @@ def read_root():
 
 @app.post("/insert")
 def insert_messages(message: Message):
-    collection.insert_one(document=message.model_dump())
+    collection.insert_one(document=message.model_dump() | {"timestamp": datetime.now()})
     
     return "OK!"
 
@@ -44,8 +48,16 @@ def get_all_numbers() -> List[str]:
 @app.get("/message")
 def get_message_by_number(number: str) -> Message:
     curs = collection.find({"number": number})
+    elem = [item for item in curs][0]
 
-    return Message(**[item for item in curs][0])
+    return Message(
+        text=elem["text"],
+        failure=elem["failure"],
+        failure_score=elem["failure_score"],
+        equipment=elem["equipment"],
+        equipment_score=elem["equipment_score"],
+        number=elem["number"],
+    )
 
 
 @app.get("/filter", response_model=List[Message])
@@ -56,9 +68,21 @@ def get_messages(equipment: Optional[str] = Query(None), failure: Optional[str] 
     if failure:
         query["failure"] = failure
 
-    cursor = collection.find(query)
+    cursor = collection.find(query).sort({ "timestamp": -1 })
     
-    results = [Message(**doc) for doc in cursor]
+    results = [
+        Message(
+            text=elem["text"],
+            failure=elem["failure"],
+            failure_score=elem["failure_score"],
+            equipment=elem["equipment"],
+            equipment_score=elem["equipment_score"],
+            number=elem["number"],
+        )
+
+        for elem in cursor
+    ]
+
     return results
 
     
