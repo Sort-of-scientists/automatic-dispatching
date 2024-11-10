@@ -16,6 +16,7 @@ pathlib.PosixPath = pathlib.WindowsPath
 DATA = './submit_sample.csv'  # CHANGE ME!!!
 SUBMIT = 'submit.csv'
 
+pairs = [[]]
 
 df = pd.read_csv(DATA, sep=',')
 
@@ -53,7 +54,7 @@ df['Точка отказа'] = model_predict(failure_model, df['text_'])
 
 # df['Точка отказа'] = df['text'].apply(failure_model.predict)
 # df['Точка отказа'] = df['text__'].apply(failure_model_v2.predict)
-df['Серийный номер'] = df['text'].apply(number_model.predict)
+df['Серийный номер'] = df['text'].apply(lambda x: number_model.predict([x])[0])
 
 end_time = time.time() - start_time
 
