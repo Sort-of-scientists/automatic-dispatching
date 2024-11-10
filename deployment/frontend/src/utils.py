@@ -19,9 +19,10 @@ def send_request_to_models_backend(text: str) -> Dict[str, Dict]:
     return response
 
 
-def insert_message_to_database(text: str, failure: str, equipment: str, number: str):
+def insert_message_to_database(text: str, failure: str, failure_score: float, equipment: str, equipment_score: float, number: str):
     response = requests.post(url=ENDPOINTS["database"]["insert"], json={
-        "text": text, "failure": failure, "equipment": equipment, "number": number
+        "text": text, "failure": failure, "equipment": equipment, "number": number,
+        "failure_score": failure_score, "equipment_score": equipment_score
     })
 
     return response.status_code
@@ -40,6 +41,12 @@ def get_message_by_number(number: str):
 
 
 def get_messages(equipment: str, failure: str):
+    if equipment == "Все":
+        equipment = None
+
+    if failure == "Все":
+        failure = None
+    
     response = requests.get(url=ENDPOINTS["database"]["filter"], params={
         "equipment": equipment, "failure": failure
     })

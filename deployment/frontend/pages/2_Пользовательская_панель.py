@@ -28,34 +28,24 @@ description = st.text_area(
 )
 
 if st.button("Отправить обращение", use_container_width=True):
-    response = send_request_to_models_backend(theme + "[SEP]" + description)
+    response = send_request_to_models_backend(theme + " [SEP] " + description)
 
     if response["numbers"]["score"] < THRESHOLDS["numbers"]:
         alert = st.error("Введите серийный номер устройства!")
 
     else:
-        if response["failure"]["score"] < THRESHOLDS["failure"] and response["equipment"]["score"] >= THRESHOLDS["equipment"]:
-            alert = st.warning("Недостаточно информации о точке отказа. Пожалуйста, уточните свое сообщение!")
-
-        if response["equipment"]["score"] < THRESHOLDS["equipment"] and response["failure"]["score"] >= THRESHOLDS["failure"]:
-            alert = st.warning("Недостаточно информации о типе устройства. Пожалуйста, уточните свое сообщение!")
-
-        if response["equipment"]["score"] < THRESHOLDS["equipment"] and response["failure"]["score"] < THRESHOLDS["failure"]:
-            alert = st.warning("Недостаточно информации о точке отказа и типе устройства. Пожалуйста, уточните свое сообщение!")
+        insert_message_to_database(
+            text=theme + "\n" + description,
+            failure=response["failure"]["label"],
+            failure_score=float(response["failure"]["score"]),
+            equipment=response["equipment"]["label"],
+            equipment_score=float(response["equipment"]["score"]),
+            number=response["numbers"]["label"]
+        )
     
-        if response["equipment"]["score"] >= THRESHOLDS["equipment"] and response["failure"]["score"] >= THRESHOLDS["failure"]:
-            alert = st.success("Обращение отправлено!")
+    alert = st.success("Обращение отправлено!")
 
-            insert_message_to_database(
-                text=theme + "\n" + description,
-                failure=response["failure"]["label"],
-                equipment=response["equipment"]["label"],
-                number=response["numbers"]["label"]
-            )
-    
     time.sleep(ALERT_DELAY)
-
-
 
     alert.empty()
 
