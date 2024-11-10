@@ -31,7 +31,7 @@ class PredictionInfo:
     Class with prediction info (label, score)
 
     ex.:
-    label = "Сервер"
+    label = "Диск"
     score = "0.8713"
     """
     def __init__(self, sentence: Sentence):

@@ -5,6 +5,8 @@ import time
 
 from deployment.backend.numbers.app import RegexNumberModel  # ЗАМЕНИТЕ НА СВОИ ИМПОРТЫ!
 from deployment.backend.equipment.model import EquipmentModel
+from deployment.backend.failure.model import FailureModel
+
 from deployment.backend.equipment.app import TextClassifier
 
 
@@ -23,7 +25,7 @@ df['text__'] = df['Тема'] + "[SEP]" + df['Описание']
 
 ######################### INIT MODELS ##############################
 equipment_model = EquipmentModel('./final-model.pt')
-failure_model = TrieFailureModel('trie_failure.yaml')
+failure_model = FailureModel('./final-model.pt')
 failure_model_v2 = TextClassifier(model_path="failure-model", tokenizer_path="failure-model")
 number_model = RegexNumberModel()
 ####################################################################
@@ -31,8 +33,8 @@ number_model = RegexNumberModel()
 start_time = time.time()
 
 
-def equipment_model_predict(data: pd.core.series.Series) -> List[str]:
-    sentences = equipment_model.predict(data.to_list())
+def model_predict(model, data: pd.core.series.Series) -> List[str]:
+    sentences = model.predict(data.to_list())
     return [sentence.tag for sentence in sentences]
 
 
@@ -43,7 +45,9 @@ def failure_model_v2_predict(texts: List[str]) -> List[str]:
 
 
 # df['Тип оборудования'] = df['text_'].apply(equipment_model.predict)
-df['Тип оборудования'] = equipment_model_predict(df['text_'])
+df['Тип оборудования'] = model_predict(equipment_model, df['text_'])
+df['Точка отказа'] = model_predict(failure_model, df['text_'])
+
 df['Точка отказа'] = df['text'].apply(failure_model.predict)
 # df['Точка отказа'] = df['text__'].apply(failure_model_v2.predict)
 df['Серийный номер'] = df['text'].apply(number_model.predict)
