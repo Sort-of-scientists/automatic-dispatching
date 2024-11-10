@@ -14,8 +14,8 @@ ENDPOINTS = {
 }
 
 THRESHOLDS = {
-    "equipment": 0.5,
-    "failure": 0.5,
+    "equipment": 0.7,
+    "failure": 0.7,
     "numbers": 1.0,
 }
 
