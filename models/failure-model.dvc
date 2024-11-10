@@ -1,0 +1,6 @@
+outs:
+- md5: 166374818f48dbb637a126ff53e429ab.dir
+  size: 120302342
+  nfiles: 6
+  hash: md5
+  path: failure-model

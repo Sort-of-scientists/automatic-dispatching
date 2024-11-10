@@ -1,0 +1,1 @@
+streamlit run Главная.py --server.address 0.0.0.0 --server.port 8000
