@@ -4,8 +4,8 @@ import pandas as pd
 import time
 
 from deployment.backend.numbers.app import RegexNumberModel  # ЗАМЕНИТЕ НА СВОИ ИМПОРТЫ!
-from deployment.backend.equipment.model import EquipmentModel
-from deployment.backend.failure.model import FailureModel
+from deployment.backend.equipment.nn import EquipmentModel
+from deployment.backend.failure.nn import FailureModel
 
 # from deployment.backend.equipment.app import TextClassifier
 
