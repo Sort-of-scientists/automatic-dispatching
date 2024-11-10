@@ -55,7 +55,7 @@ if st.button("Отправить обращение", use_container_width=True):
             number=response["numbers"]["label"]
         )
     
-    alert = st.success("Обращение отправлено!")
+        alert = st.success("Обращение отправлено!")
 
     time.sleep(ALERT_DELAY)
 
