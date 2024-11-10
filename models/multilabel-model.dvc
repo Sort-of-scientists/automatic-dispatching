@@ -1,0 +1,6 @@
+outs:
+- md5: 0e3521ba68753f0fe2cfc22a3a29852e.dir
+  size: 1443382030
+  nfiles: 8
+  hash: md5
+  path: multilabel-model
